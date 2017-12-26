@@ -18,8 +18,8 @@ def read_name_list():
 def main():
 	caffe.set_mode_cpu()
 
-	model_def = './examples/att_faces/train_val.prototxt'
-	model_weights = './examples/att_faces/myfinetune_iter_10000.caffemodel'
+	model_def = './examples/att_faces/deply.prototxt'
+	model_weights = './examples/att_faces/myfc8_iter_10000.caffemodel'
 
 	net = caffe.Net(model_def,      # defines the structure of the model
 		        model_weights,  # contains the trained weights

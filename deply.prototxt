@@ -1,40 +1,15 @@
 name: "VGG_FACE_16_Net"
 layer {
   name: "data"
-  type: "Data"
+  type: "Input"
   top: "data"
-  top: "label"
-  include {
-    phase: TRAIN
-  }
-  transform_param {
-    mirror: true
-    crop_size: 224
-    mean_file: "examples/att_faces/mean.binaryproto"
-  }
-  data_param {
-    source: "examples/att_faces/att_faces_train_lmdb"
-    batch_size: 1
-    backend: LMDB
-  }
-}
-layer {
-  name: "data"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-    phase: TEST
-  }
-  transform_param {
-    mirror: false
-    crop_size: 224
-    mean_file: "examples/att_faces/mean.binaryproto"
-  }
-  data_param {
-    source: "examples/att_faces/att_faces_tst_lmdb"
-    batch_size: 1
-    backend: LMDB
+  input_param {
+    shape {
+      dim: 1
+      dim: 3
+      dim: 224
+      dim: 224
+    }
   }
 }
 layer {
@@ -623,19 +598,8 @@ layer {
   }
 }
 layer {
-  name: "accuracy"
-  type: "Accuracy"
   bottom: "myfc8_flickr"
-  bottom: "label"
-  top: "accuracy"
-  include {
-    phase: TEST
-  }
-}
-layer {
-  name: "loss"
-  type: "SoftmaxWithLoss"
-  bottom: "myfc8_flickr"
-  bottom: "label"
-  top: "loss"
+  top: "prob"
+  name: "prob"
+  type: "Softmax"
 }
